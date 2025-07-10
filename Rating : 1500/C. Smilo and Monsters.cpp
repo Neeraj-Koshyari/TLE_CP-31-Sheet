@@ -16,39 +16,32 @@ int main() {
     cin>>t;
 
     while(t--){
-        int n;
+        ll n, left = 0, right = 0;
         cin>>n;
 
         vector<ll> v(n);
-        for(int i=0; i<n; i++)  cin>>v[i];
+        for(int i=0; i<n; i++){
+            cin>>v[i];
+            right += v[i];
+        }
 
         sort(v.begin(), v.end());
 
-        ll ans = 0, x = 0, l = 0, r = n-1;
-        while(l<=r){
-            if(l == r){
-                if(v[r]+x == 1) ans++;
-                else ans += ((v[r]+x+1)/2 + 1);
-                x = 0;
+        ll ans = 0;
+        for(int i=0; i<n; i++){
+            left += v[i];
+            right -= v[i];
 
+            if(left >= right){
+                ans += (right + (n-i-1));
+                left -= right;
                 break;
             }
-
-            x += v[l];
-            if(x >= v[r]){
-                ll rem = x - v[r];
-                ans += v[r] + 1;
-
-                x = rem;
-
-                r--;
-            }
-            l++;
         }
 
-        if(x == 1)  ans++;
-        else if(x > 1)  ans += (x+1)/2 + 1;
-        
+        if(left == 1)   ans++;
+        else if(left > 1) ans += (left+1)/2 + 1;
+
         cout<<ans<<endl;
     }
 
