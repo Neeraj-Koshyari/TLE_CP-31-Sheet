@@ -22,11 +22,8 @@ int main() {
 
     vector<int> ans(n,-1);
     queue<int> qu;
-    set<int> st;
-    for(int i=1; i<=n; i++){
-        qu.push(i);
-        st.insert(i);
-    }
+
+    for(int i=1; i<=n; i++) qu.push(i);
 
     while(qu.size() > 1){
         int idx1 = qu.front();
@@ -45,17 +42,16 @@ int main() {
         if(a > b){
             ans[idx1-1] = a;
             qu.push(idx2);
-            st.erase(a);
         }
         else{
             ans[idx2-1] = b;
             qu.push(idx1);
-            st.erase(b);
         }
     }
 
-    ans[qu.front()-1] = *st.begin();
+    ans[qu.front()-1] = n;
     cout<<"! ";
     for(auto& x: ans)   cout<<x<<" ";
+    cout.flush();
     return 0;
 }
