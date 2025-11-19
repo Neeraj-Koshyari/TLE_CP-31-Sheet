@@ -1,5 +1,3 @@
-// Problem Link: https://codeforces.com/problemset/problem/2041/D
-
 // #include<fstream>
 // freopen("input.txt", "r", stdin);
 // freopen("output.txt", "w", stdout);
@@ -39,6 +37,7 @@ int find(vector<string>& v, int sx, int sy, int ex, int ey, int n, int m){
     int ax[] = {1, -1, 0, 0};
     int ay[] = {0, 0, 1, -1};
     int dir[] = {1, 2, 3, 4};
+    int oppDir[] = {2, 1, 4, 3};
 
     set<A> st;
     st.insert(A(0, 0, 0, sx, sy));
@@ -55,8 +54,10 @@ int find(vector<string>& v, int sx, int sy, int ex, int ey, int n, int m){
 
             if(notOk(nx, ny, n, m) || v[nx][ny] == '#') continue;
 
-            if(node.dstep == 3 && node.direction == dir[i])
-                st.insert(A(node.step+3, dir[i], 2, nx, ny));
+            if(node.dstep == 3 && node.direction == dir[i]){
+                st.insert(A(node.step+1, oppDir[dir[i]-1], 1, node.x - ax[i], node.y - ay[i]));
+                v[node.x][node.y] = '.';
+            }
             else if(node.direction == dir[i])
                 st.insert(A(node.step+1, dir[i], node.dstep+1, nx, ny));
             else
